@@ -1,0 +1,91 @@
+song_1 = "";
+song_2 = "";
+
+function preload()
+{
+	song_1 = loadSound("BoyWithUke.mp3");
+	song_2 = loadSound("musiic.mp3")
+}
+
+scoreRightWrist = 0;
+scoreLeftWrist = 0;
+
+rightWristX = 0;
+rightWristY = 0;
+
+leftWristX = 0;
+leftWristY = 0;
+
+function setup() {
+	canvas =  createCanvas(600, 500);
+	canvas.center();
+
+	video = createCapture(VIDEO);
+	video.hide();
+
+	poseNet = ml5.poseNet(video, modelLoaded);
+	poseNet.on('pose', gotPoses);
+}
+
+function modelLoaded() {
+  console.log('PoseNet Is Initialized');
+}
+
+function gotPoses(results)
+{
+  if(results.length > 0)
+  {
+	scoreRightWrist =  results[0].pose.keypoints[10].score;
+	scoreLeftWrist =  results[0].pose.keypoints[9].score;
+	console.log("scoreRightWrist = " + scoreRightWrist + " scoreLeftWrist = " + scoreLeftWrist);
+	
+	rightWristX = results[0].pose.rightWrist.x;
+	rightWristY = results[0].pose.rightWrist.y;
+	console.log("rightWristX = " + rightWristX +" rightWristY = "+ rightWristY);
+
+	leftWristX = results[0].pose.leftWrist.x;
+	leftWristY = results[0].pose.leftWrist.y;
+	console.log("leftWristX = " + leftWristX +" leftWristY = "+ leftWristY);
+		
+  }
+}
+
+function draw() {
+	image(video, 0, 0, 600, 500);
+
+	fill("#FF0000");
+	stroke("#FF0000");
+
+	function isPlaying()
+	{
+		song_variable.isPlaying()
+	}
+	if (scoreLeftWrist = 0.2)
+	{
+       stop()
+	   circle (leftWristX, leftWristY, 20);
+	   if (song_2 = flase)
+	   {
+		   song_1.play();
+	   }
+	}
+	if (scoreRighttWrist = 0.2)
+	{
+       stop()
+	   circle (rightWristX, rightWristY, 20);
+	   if (song_1 = flase)
+	   {
+		   song_2.play();
+	   }
+	}
+}
+
+
+function play()
+{
+	song.play();
+}
+function isPlaying()
+{
+     song_variable.isPl
+}
